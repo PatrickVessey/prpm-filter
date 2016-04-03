@@ -19,7 +19,7 @@ Basic sample usage to produce a unique download count for each show matching the
 See _prpm-stats.sh_ for an example of how to process rotated logs, and to use the output from _prpm-filter.sh_ to produce unique counts for downloads over time, counts and geographic location of your unique downloaders and so on.
 
 ##Web Log Formats and Rotation
-_prpm-filter.sh_ will happily process web logs in the standard _combined_ format, used both by Apache and Nginx. However, one of the PRPM Guidelines requires the filtering of lines on the basis of specific byte-range data, which is not recorded in the combined log format by default. If you want your generated statistics to be completely PRPM Guideline compliant, you will need to alter your existing log format (or write out an additional custom log) with the byte-range request data suffixed. That is, a format of:
+_prpm-filter.sh_ will happily process web logs in the standard _combined_ format, used both by Apache and Nginx. However, one of the PRPM Guidelines requires the filtering of lines on the basis of specific byte-range data, which is not recorded in the combined log format by default. If you want your generated statistics to be completely PRPM Guideline compliant, you will need to alter your existing log format (or write out an additional custom log) with the byte-range request data suffixed. That is, a [format](http://httpd.apache.org/docs/current/mod/mod_log_config.html) of:
 
 `%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" \"%{Range}i\"`
 

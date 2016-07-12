@@ -73,6 +73,9 @@ gawk -P 'BEGIN {
         # Uncomment to strip path from show filename, if desired
         #gsub(".*/", "", url)
 
+        # Uncomment to strip query string from show filename, if desired
+        #gsub("\\?.*$", "", url)
+
         print url, yyyy"-"mm"-"dd, ip, ua
     }' | sort -u
 #eof

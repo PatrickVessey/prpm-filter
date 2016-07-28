@@ -19,7 +19,7 @@ if [[ -z "$REGEX" ]]; then
 fi
 
 # Build a regex-safe string containg a list of bots/crawlers
-BOTS=$(wget -qO- http://www.useragentstring.com/pages/Crawlerlist/ \
+BOTS=$(wget -qO- http://www.useragentstring.com/pages/useragentstring.php?typ=Crawler \
     | tr -d '\n' | sed -e "s/<img[^>]*>//g" | tr '<' '\n' | grep '^h3>' \
     | cut -c4- | tr '\n' '|' | tr -c '[[:alnum:]]|\|' '.' | sed s'/.$//')
 

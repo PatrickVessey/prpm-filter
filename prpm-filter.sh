@@ -2,7 +2,7 @@
 set -e
 IFS=$'\n\t'
 
-# Version 1.0; April 2016
+# Version 1.01; August 2016
 # Copyright (c) 2016 Patrick Vessey <patrick@linuxluddites.com>
 # This software is released under the MIT License; for further information,
 # please refer to <https://opensource.org/licenses/MIT>
@@ -19,9 +19,13 @@ if [[ -z "$REGEX" ]]; then
 fi
 
 # Build a regex-safe string containg a list of bots/crawlers
-BOTS=$(wget -qO- http://www.useragentstring.com/pages/useragentstring.php?typ=Crawler \
+BOTS=$(wget -qO- -t 5 -T 5 http://www.useragentstring.com/pages/useragentstring.php?typ=Crawler \
     | tr -d '\n' | sed -e "s/<img[^>]*>//g" | tr '<' '\n' | grep '^h3>' \
     | cut -c4- | tr '\n' '|' | tr -c '[[:alnum:]]|\|' '.' | sed s'/.$//')
+if [[ -z "$BOTS" ]]; then
+	echo "warning: useragentstring.com unreachable, using fallback list of bots" >&2
+	BOTS="008|ABACHOBot|Accoona.AI.Agent|AddSugarSpiderBot|AnyApexBot|Arachmo|B.l.i.t.z.B.O.T|Baiduspider|BecomeBot|BeslistBot|BillyBobBot|Bimbot|Bingbot|BlitzBOT|boitho.com.dc|boitho.com.robot|btbot|CatchBot|Cerberian.Drtrs|Charlotte|ConveraCrawler|cosmos|Covario.IDS|DataparkSearch|DiamondBot|Discobot|Dotbot|EmeraldShield.com.WebBot|envolk[ITS]spider|EsperanzaBot|Exabot|FAST.Enterprise.Crawler|FAST.WebCrawler|FDSE.robot|FindLinks|FurlBot|FyberSpider|g2crawler|Gaisbot|GalaxyBot|genieBot|Gigabot|Girafabot|Googlebot|Googlebot.Image|GurujiBot|HappyFunBot|hl.ftien.spider|Holmes|htdig|iaskspider|ia.archiver|iCCrawler|ichiro|igdeSpyder|IRLbot|IssueCrawler|Jaxified.Bot|Jyxobot|KoepaBot|L.webis|LapozzBot|Larbin|LDSpider|LexxeBot|Linguee.Bot|LinkWalker|lmspider|lwp.trivial|mabontland|magpie.crawler|Mediapartners.Google|MJ12bot|Mnogosearch|mogimogi|MojeekBot|Moreoverbot|Morning.Paper|msnbot|MSRBot|MVAClient|mxbot|NetResearchServer|NetSeer.Crawler|NewsGator|NG.Search|nicebot|noxtrumbot|Nusearch.Spider|NutchCVS|Nymesis|obot|oegp|omgilibot|OmniExplorer.Bot|OOZBOT|Orbiter|PageBitesHyperBot|Peew|polybot|Pompos|PostPost|Psbot|PycURL|Qseero|Radian6|RAMPyBot|RufusBot|SandCrawler|SBIder|ScoutJet|Scrubby|SearchSight|Seekbot|semanticdiscovery|Sensis.Web.Crawler|SEOChat..Bot|SeznamBot|Shim.Crawler|ShopWiki|Shoula.robot|silk|Sitebot|Snappy|sogou.spider|Sosospider|Speedy.Spider|Sqworm|StackRambler|suggybot|SurveyBot|SynooBot|Teoma|TerrawizBot|TheSuBot|Thumbnail.CZ.robot|TinEye|truwoGPS|TurnitinBot|TweetedTimes.Bot|TwengaBot|updated|Urlfilebot|Vagabondo|VoilaBot|Vortex|voyager|VYU2|webcollage|Websquash.com|wf84|WoFindeIch.Robot|WomlpeFactory|Xaldon.WebSpider|yacy|Yahoo..Slurp|Yahoo..Slurp.China|YahooSeeker|YahooSeeker.Testing|YandexBot|YandexImages|Yasaklibot|Yeti|YodaoBot|yoogliFetchAgent|YoudaoBot|Zao|Zealbot|zspider|ZyBorg"
+fi
 
 gawk -P 'BEGIN {
         FS="( \"|\" )"

@@ -23,6 +23,7 @@ _prpm-filter.sh_ will happily process web logs in the standard _combined_ format
 
 `%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" \"%{Range}i\"`
 
-The IAB is [working towards](http://www.iab.com/councils-committees-task-forces-and-working-groups/?key=a0Gj000000UVMNHEA5) producing download measurement guidelines that will likely become standard across the sector once released (with slow progress on these being cited by some as the reason that Public Radio released their own guidelines independently). Regardless, it is likely that any IAB measurement criteria will not differ significantly from those implemented here, and will also require the collection of byte-range request data. So the addition of such data to your log files is highly recommended for future compatibility.
+Of note is that in many Linux distros, web log rotation is configured to retain only a year's worth of data. If you'd like to generate meaningful historical statistics using this script, refer to your distro's documentation for details on how to change this behaviour.
 
-Of also note is that in many Linux distros, web log rotation is configured to retain only a year's worth of data. If you'd like to generate meaningful historical statistics using this script, refer to your distro's documentation for details on how to change this behaviour.
+##Footnote
+Public Radio released the guidelines implemented here at least in part due to frustration at the length of time the IAB were taking in producing their own 'industry standard' guidance. A document from the IAB Working Group was finally [released](https://iabtechlab.com/specifications-guidelines/podcast-metrics/) in September 2016. It is left to the reader to determine whether this 'official' guidance adds anything of substantive merit to the process implemented here, or whether that Working Group was simply the usual tea drinking and cake eating boondoggle for committee participants.
